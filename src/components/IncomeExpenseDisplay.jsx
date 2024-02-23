@@ -8,7 +8,7 @@ export default function IncomeExpenseDisplay(props) {
           <h4>INCOME</h4>
           <p className="income-text">{`£${props.income}`}</p>
         </div>
-        <div className="money-border"></div>
+        <span className="money-border"></span>
         <div>
           <h4>EXPENSE</h4>
           <p className="expense-text">{`£${props.expense}`}</p>

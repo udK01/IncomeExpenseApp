@@ -5,15 +5,17 @@ export default function NewTransaction({ onNewTransaction }) {
     const textInput = document.getElementById("text").value;
     const amountInput = document.getElementById("amount").value;
 
-    const newTransaction = {
-      text: textInput,
-      amount: parseFloat(amountInput),
-    };
+    if (textInput !== `` && amountInput !== null) {
+      const newTransaction = {
+        text: textInput,
+        amount: parseFloat(amountInput),
+      };
 
-    onNewTransaction(newTransaction);
+      onNewTransaction(newTransaction);
 
-    document.getElementById("text").value = "";
-    document.getElementById("amount").value = "";
+      document.getElementById("text").value = "";
+      document.getElementById("amount").value = "";
+    }
   };
 
   return (

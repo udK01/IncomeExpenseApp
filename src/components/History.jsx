@@ -10,14 +10,19 @@ export default function History(props) {
   };
 
   useEffect(() => {
-    if (selectedOption === "Ascending") {
-      setTransactions(
-        [...props.transactions].sort((a, b) => a.amount - b.amount)
-      );
-    } else if (selectedOption === "Descending") {
-      setTransactions(
-        [...props.transactions].sort((a, b) => b.amount - a.amount)
-      );
+    switch (selectedOption) {
+      case "Ascending":
+        setTransactions(
+          [...props.transactions].sort((a, b) => a.amount - b.amount)
+        );
+        break;
+      case "Descending":
+        setTransactions(
+          [...props.transactions].sort((a, b) => b.amount - a.amount)
+        );
+        break;
+      default:
+        setTransactions(props.transactions);
     }
   }, [selectedOption, props.transactions]);
 
