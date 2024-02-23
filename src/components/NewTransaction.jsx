@@ -18,7 +18,7 @@ export default function NewTransaction({ onNewTransaction }) {
 
   return (
     <>
-      <h3>Add new transaction</h3>
+      <h3 className="underline">Add new transaction</h3>
       <form className="form" onSubmit={handleNewTransaction}>
         <div>
           <label>Text</label>

@@ -2,10 +2,18 @@ import IncomeExpenseDisplay from "./components/IncomeExpenseDisplay";
 import BalanceDisplay from "./components/BalanceDisplay";
 import NewTransaction from "./components/NewTransaction";
 import History from "./components/History";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    const savedTransactions = localStorage.getItem("transactions");
+    return savedTransactions ? JSON.parse(savedTransactions) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
+
   const { income, expense } = calculateIncomeAndExpense();
 
   const handleNewTransaction = (newTransaction) => {

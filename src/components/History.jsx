@@ -1,9 +1,29 @@
 import Transaction from "./Transaction";
+import { useState, useEffect } from "react";
 
 export default function History(props) {
+  const [transactions, setTransactions] = useState(props.transactions);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
+  useEffect(() => {
+    if (selectedOption === "Ascending") {
+      setTransactions(
+        [...props.transactions].sort((a, b) => a.amount - b.amount)
+      );
+    } else if (selectedOption === "Descending") {
+      setTransactions(
+        [...props.transactions].sort((a, b) => b.amount - a.amount)
+      );
+    }
+  }, [selectedOption, props.transactions]);
+
   function displayTransactions() {
-    if (props.transactions.length !== 0) {
-      return props.transactions.map((transaction, index) => (
+    if (transactions.length !== 0) {
+      return transactions.map((transaction, index) => (
         <Transaction
           key={index}
           index={index}
@@ -24,7 +44,19 @@ export default function History(props) {
 
   return (
     <>
-      <h3>History</h3>
+      <div id="history-container" className="underline">
+        <h3>History</h3>
+        <select
+          id="dropdown-filter"
+          value={selectedOption}
+          onChange={handleSelectChange}
+          className="history-filter"
+        >
+          <option value={""}>-- Please Select --</option>
+          <option value={"Ascending"}>Ascending</option>
+          <option value={"Descending"}>Descending</option>
+        </select>
+      </div>
       <ul className="transactions-list">{displayTransactions()}</ul>
     </>
   );
