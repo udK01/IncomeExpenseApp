@@ -6,7 +6,12 @@ export default function Transaction(props) {
   return (
     <>
       <li className={props.liClassName}>
-        <button className="delete-btn">x</button>
+        <button
+          className="delete-btn"
+          onClick={() => props.deleteTransaction(props.index)}
+        >
+          x
+        </button>
         {props.text}
         <span>{`£${cleanAmount}`}</span>
       </li>
@@ -14,12 +19,18 @@ export default function Transaction(props) {
   );
 }
 Transaction.propTypes = {
+  index: PropTypes.number,
   liClassName: PropTypes.string,
   text: PropTypes.string,
   amount: PropTypes.number,
+  deleteTransaction: PropTypes.func,
 };
 Transaction.defaultProps = {
-  liClassName: "moneyIn",
-  text: "Cash",
+  index: `0`,
+  liClassName: `moneyIn`,
+  text: `Cash`,
   amount: `0.00`,
+  deleteTransaction: () => {
+    console.log(`Forgot Delete Method`);
+  },
 };

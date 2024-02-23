@@ -11,6 +11,10 @@ export default function App() {
     setTransactions([...transactions, newTransaction]);
   };
 
+  function handleTransactionDelete(index) {
+    setTransactions(transactions.filter((_, i) => i !== index));
+  }
+
   return (
     <>
       <div className="expense-tracker-container">
@@ -18,7 +22,10 @@ export default function App() {
         <div className="container">
           <BalanceDisplay />
           <IncomeExpenseDisplay />
-          <History transactions={transactions} />
+          <History
+            transactions={transactions}
+            onTransactionDelete={handleTransactionDelete}
+          />
           <NewTransaction onNewTransaction={handleNewTransaction} />
         </div>
       </div>
