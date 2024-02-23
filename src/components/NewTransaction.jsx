@@ -5,7 +5,7 @@ export default function NewTransaction({ onNewTransaction }) {
     const textInput = document.getElementById("text").value;
     const amountInput = document.getElementById("amount").value;
 
-    if (textInput !== `` && amountInput !== null) {
+    if (textInput !== `` && amountInput !== null && amountInput !== `0`) {
       const newTransaction = {
         text: textInput,
         amount: parseFloat(amountInput),

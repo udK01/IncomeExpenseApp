@@ -169,6 +169,42 @@ input[type='number'] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
+.income-filter-btn {
+  display: inline-block;
+  padding: 3px 5px;
+  border: none;
+  margin-top: 20px;
+  margin-left: 40px;
+  cursor: pointer;
+  background: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.income-filter-btn:hover {
+  background-color: #9c88ff;
+  color: #fff;
+}
+
+.expense-filter-btn {
+  display: inline-block;
+  padding: 3px 5px;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+  background: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.expense-filter-btn:hover {
+  background-color: #9c88ff;
+  color: #fff;
+}
+
+.btnPressed {
+  background-color: #9c88ff;
+  color: #fff;
+}
+
 #history-container {
   display: flex;
   align-items: center;
