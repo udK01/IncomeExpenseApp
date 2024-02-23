@@ -25,9 +25,7 @@ export default function NewTransaction({ onNewTransaction }) {
           <input type="text" id="text" placeholder="Enter text..." />
         </div>
         <div>
-          <label>
-            Amount <br /> (negative - expense, positive-income)
-          </label>
+          <label>Amount: (negative - expense, positive - income)</label>
           <input type="number" id="amount" placeholder="Enter amount..." />
         </div>
         <button className="btn">Add transaction</button>
