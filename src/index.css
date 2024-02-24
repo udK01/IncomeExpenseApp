@@ -107,7 +107,10 @@ input[type='number'] {
 .transactions-list {
   list-style-type: none;
   padding: 0;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
+  height:300px;
+  overflow-y:scroll;
+  scrollbar-width: none;
   position: relative;
 }
 
@@ -216,5 +219,4 @@ input[type='number'] {
 .underline {
   border-bottom: 1px solid #bbb;
 }
-
 
