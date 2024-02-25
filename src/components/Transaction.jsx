@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 
 export default function Transaction(props) {
-  const cleanAmount = props.amount.toString().replace(`-`, "");
+  function displayAmount() {
+    if (props.amount < 0) {
+      return `-£${Math.abs(props.amount)}`;
+    }
+    return `+£${props.amount}`;
+  }
 
   return (
     <>
@@ -13,7 +18,7 @@ export default function Transaction(props) {
           x
         </button>
         {props.text}
-        <span>{`£${cleanAmount}`}</span>
+        <span>{displayAmount()}</span>
       </li>
     </>
   );
