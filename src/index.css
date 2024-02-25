@@ -107,7 +107,6 @@ input[type='number'] {
 .transactions-list {
   list-style-type: none;
   padding: 0;
-  /* margin-bottom: 40px; */
   max-height:300px;
   overflow-y:scroll;
   scrollbar-width: none;
@@ -134,10 +133,8 @@ input[type='number'] {
   font-size: 20px;
   line-height: 20px;
   padding: 2px 5px;
-  position: absolute;
   top: 50%;
   left: 0;
-  transform: translate(-100%, -50%);
   margin-right: 10px;
   opacity: 0;
   transition: opacity 0.3s ease;

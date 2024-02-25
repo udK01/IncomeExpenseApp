@@ -1,6 +1,6 @@
-export default function NewTransaction({ onNewTransaction, bankName }) {
-  const textName = `${bankName}Text`;
-  const amountName = `${bankName}Amount`;
+export default function NewTransaction({ onNewTransaction, user }) {
+  const textName = `${user}Text`;
+  const amountName = `${user}Amount`;
 
   const handleNewTransaction = (e) => {
     e.preventDefault();
@@ -8,7 +8,12 @@ export default function NewTransaction({ onNewTransaction, bankName }) {
     const textInput = document.getElementById(textName).value;
     const amountInput = document.getElementById(amountName).value;
 
-    if (textInput !== `` && amountInput !== null && amountInput !== `0`) {
+    if (
+      textInput !== "" &&
+      !isNaN(amountInput) &&
+      amountInput !== "" &&
+      amountInput !== "0"
+    ) {
       const newTransaction = {
         text: textInput,
         amount: parseFloat(amountInput),

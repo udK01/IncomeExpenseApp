@@ -4,8 +4,9 @@ export default function App() {
   return (
     <>
       <div className="bank-container">
-        <ExpenseApp bankName={"Lloyds"} />
-        <ExpenseApp bankName={"RBS"} />
+        <ExpenseApp user={"Sam"} />
+        <ExpenseApp user={"Corben"} />
+        <ExpenseApp user={"Trafford"} />
       </div>
     </>
   );
