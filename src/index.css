@@ -108,7 +108,7 @@ input[type='number'] {
   list-style-type: none;
   padding: 0;
   /* margin-bottom: 40px; */
-  height:300px;
+  max-height:300px;
   overflow-y:scroll;
   scrollbar-width: none;
   position: relative;
@@ -220,3 +220,7 @@ input[type='number'] {
   border-bottom: 1px solid #bbb;
 }
 
+.bank-container {
+  display: flex;
+  justify-content: center;
+}

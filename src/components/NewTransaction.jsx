@@ -1,9 +1,12 @@
-export default function NewTransaction({ onNewTransaction }) {
+export default function NewTransaction({ onNewTransaction, bankName }) {
+  const textName = `${bankName}Text`;
+  const amountName = `${bankName}Amount`;
+
   const handleNewTransaction = (e) => {
     e.preventDefault();
 
-    const textInput = document.getElementById("text").value;
-    const amountInput = document.getElementById("amount").value;
+    const textInput = document.getElementById(textName).value;
+    const amountInput = document.getElementById(amountName).value;
 
     if (textInput !== `` && amountInput !== null && amountInput !== `0`) {
       const newTransaction = {
@@ -13,8 +16,8 @@ export default function NewTransaction({ onNewTransaction }) {
 
       onNewTransaction(newTransaction);
 
-      document.getElementById("text").value = "";
-      document.getElementById("amount").value = "";
+      document.getElementById(textName).value = "";
+      document.getElementById(amountName).value = "";
     }
   };
 
@@ -24,11 +27,11 @@ export default function NewTransaction({ onNewTransaction }) {
       <form className="form" onSubmit={handleNewTransaction}>
         <div>
           <label>Text</label>
-          <input type="text" id="text" placeholder="Enter text..." />
+          <input type="text" id={textName} placeholder="Enter text..." />
         </div>
         <div>
           <label>Amount: (negative - expense, positive - income)</label>
-          <input type="number" id="amount" placeholder="Enter amount..." />
+          <input type="number" id={amountName} placeholder="Enter amount..." />
         </div>
         <button className="btn">Add transaction</button>
       </form>
