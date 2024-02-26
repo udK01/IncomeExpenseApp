@@ -8,6 +8,8 @@ export default function NewTransaction({ onNewTransaction, user }) {
     const textInput = document.getElementById(textName).value;
     const amountInput = document.getElementById(amountName).value;
 
+    console.log(getDateAndTime());
+
     if (
       textInput !== "" &&
       !isNaN(amountInput) &&
@@ -25,6 +27,21 @@ export default function NewTransaction({ onNewTransaction, user }) {
       document.getElementById(amountName).value = "";
     }
   };
+
+  function padZero(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+
+  function getDateAndTime() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = padZero(date.getMonth() + 1);
+    const day = padZero(date.getDate());
+    const hours = padZero(date.getHours());
+    const minutes = padZero(date.getMinutes());
+    const seconds = padZero(date.getSeconds());
+    return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
+  }
 
   return (
     <>

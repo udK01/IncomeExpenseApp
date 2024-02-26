@@ -98,10 +98,20 @@ input[type='number'] {
 
 .moneyIn {
   border-right: 5px solid #2ecc71;
+  transition: ease 0.25s;
+}
+
+.moneyIn:hover {
+  border-right: 50px solid #2ecc71;
 }
 
 .moneyOut {
   border-right: 5px solid #c0392b;
+  transition: ease 0.25s;
+}
+
+.moneyOut:hover {
+  border-right: 50px solid #c0392b;
 }
 
 .transactions-list {

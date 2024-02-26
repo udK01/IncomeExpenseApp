@@ -5,8 +5,8 @@ export default function App() {
     <>
       <div className="bank-container">
         <ExpenseApp user={"Sam"} />
-        <ExpenseApp user={"Corben"} />
-        <ExpenseApp user={"Trafford"} />
+        {/* <ExpenseApp user={"Corben"} />
+        <ExpenseApp user={"Trafford"} /> */}
       </div>
     </>
   );
