@@ -6,13 +6,15 @@ export default function NewTransaction({ onNewTransaction, user }) {
     e.preventDefault();
 
     const textInput = document.getElementById(textName).value;
-    const amountInput = document.getElementById(amountName).value;
+    const amountInput = validateAmount(
+      document.getElementById(amountName).value
+    );
 
     console.log(getDateAndTime());
 
     if (
       textInput !== "" &&
-      !isNaN(amountInput) &&
+      amountInput !== null &&
       amountInput !== "" &&
       amountInput !== "0"
     ) {
@@ -25,6 +27,8 @@ export default function NewTransaction({ onNewTransaction, user }) {
 
       document.getElementById(textName).value = "";
       document.getElementById(amountName).value = "";
+    } else {
+      console.error(`Invalid Input For Amount!`);
     }
   };
 
@@ -43,6 +47,16 @@ export default function NewTransaction({ onNewTransaction, user }) {
     return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
   }
 
+  function validateAmount(input) {
+    if (!isNaN(input)) {
+      const amount = parseFloat(input);
+      if (!isNaN(amount) && isFinite(amount)) {
+        return amount.toFixed(2);
+      }
+    }
+    return null;
+  }
+
   return (
     <>
       <h3 className="underline">Add new transaction</h3>
@@ -53,7 +67,7 @@ export default function NewTransaction({ onNewTransaction, user }) {
         </div>
         <div>
           <label>Amount: (negative - expense, positive - income)</label>
-          <input type="number" id={amountName} placeholder="Enter amount..." />
+          <input type="text" id={amountName} placeholder="Enter amount..." />
         </div>
         <button className="btn">Add transaction</button>
       </form>
