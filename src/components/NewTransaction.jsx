@@ -10,8 +10,6 @@ export default function NewTransaction({ onNewTransaction, user }) {
       document.getElementById(amountName).value
     );
 
-    console.log(getDateAndTime());
-
     if (
       textInput !== "" &&
       amountInput !== null &&
@@ -21,8 +19,12 @@ export default function NewTransaction({ onNewTransaction, user }) {
       const newTransaction = {
         text: textInput,
         amount: parseFloat(amountInput),
+        date: getDateAndTime(),
+        type: `Add`,
+        inspect: false,
+        source: user,
       };
-
+      // console.log("New Transaction:", JSON.stringify(newTransaction));
       onNewTransaction(newTransaction);
 
       document.getElementById(textName).value = "";

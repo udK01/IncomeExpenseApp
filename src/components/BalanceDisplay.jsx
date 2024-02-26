@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 export default function BalanceDisplay(props) {
   function displayBalance() {
     if (props.balance < 0) {
-      return `-£${Math.abs(props.balance)}`;
+      return `-£${Math.abs(props.balance).toFixed(2)}`;
     }
-    return `£${props.balance}`;
+    return `£${props.balance.toFixed(2)}`;
   }
 
   return (

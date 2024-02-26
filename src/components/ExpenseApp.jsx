@@ -11,6 +11,8 @@ export default function ExpenseApp({ user }) {
     return savedTransactions ? JSON.parse(savedTransactions) : [];
   });
 
+  // console.log(...transactions);
+
   useEffect(() => {
     localStorage.setItem(user, JSON.stringify(transactions));
   }, [transactions]);

@@ -5,27 +5,11 @@ export default function History(props) {
   const [transactions, setTransactions] = useState(props.transactions);
   const [selectedOption, setSelectedOption] = useState("");
   const [historyFilter, setHistoryFilter] = useState("");
+  const [filterChanged, setFilterChanged] = useState(false);
 
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
-  function handleHistoryFilterChange(e) {
-    const clickedButton = e.target;
-    setHistoryFilter(clickedButton.textContent);
-
-    if (historyFilter !== clickedButton.textContent) {
-      const otherButtonId =
-        clickedButton.id === "incomeBtn" ? "expenseBtn" : "incomeBtn";
-      document.getElementById(otherButtonId).classList.remove("btnPressed");
-      clickedButton.classList.toggle("btnPressed");
-      setSelectedOption("");
-    } else {
-      clickedButton.classList.remove("btnPressed");
-      setHistoryFilter("");
-      setSelectedOption("");
-    }
-  }
+  useEffect(() => {
+    setFilterChanged((prev) => !prev);
+  }, [selectedOption, historyFilter]);
 
   useEffect(() => {
     switch (selectedOption) {
@@ -71,15 +55,55 @@ export default function History(props) {
           liClassName={incomeOrExpense(transaction.amount)}
           amount={transaction.amount}
           deleteTransaction={props.onTransactionDelete}
+          date={transaction.date}
+          type={transaction.type}
+          source={transaction.source}
+          inspect={props.inspect}
+          handleInspect={handleInspect}
+          filterChanged={filterChanged}
         />
       ));
     } else {
-      return <li className="centered-li">No Transactions Yet.</li>;
+      return (
+        <li>
+          <div className="empty-list">No Transactions Yet</div>
+        </li>
+      );
     }
   }
 
   function incomeOrExpense(n) {
     return n < 0 ? "moneyOut" : "moneyIn";
+  }
+
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
+  function handleHistoryFilterChange(e) {
+    const clickedButton = e.target;
+    setHistoryFilter(clickedButton.textContent);
+
+    if (historyFilter !== clickedButton.textContent) {
+      const otherButtonId =
+        clickedButton.id === "incomeBtn" ? "expenseBtn" : "incomeBtn";
+      document.getElementById(otherButtonId).classList.remove("btnPressed");
+      clickedButton.classList.toggle("btnPressed");
+      setSelectedOption("");
+    } else {
+      clickedButton.classList.remove("btnPressed");
+      setHistoryFilter("");
+      setSelectedOption("");
+    }
+  }
+
+  function handleInspect(index, x) {
+    setTransactions((prevTransactions) => {
+      return prevTransactions.map((transaction, i) => {
+        return index === i ? { ...transaction, inspect: x } : transaction;
+      });
+    });
+    setFilterChanged(false);
   }
 
   return (
