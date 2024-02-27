@@ -5,22 +5,37 @@ import History from "./History";
 
 import { useState, useEffect } from "react";
 
-export default function ExpenseApp({ user }) {
+export default function ExpenseApp({ id, user }) {
   const [transactions, setTransactions] = useState(() => {
-    const savedTransactions = localStorage.getItem(user);
+    const savedTransactions = localStorage.getItem(id);
     return savedTransactions ? JSON.parse(savedTransactions) : [];
   });
 
-  // console.log(...transactions);
-
   useEffect(() => {
-    localStorage.setItem(user, JSON.stringify(transactions));
+    localStorage.setItem(id, JSON.stringify(transactions));
   }, [transactions]);
 
   const { income, expense } = calculateIncomeAndExpense();
 
   const handleNewTransaction = (newTransaction) => {
     setTransactions([...transactions, newTransaction]);
+  };
+
+  const handleNewTransfer = (newTransfer) => {
+    const transfereeTransactionsStr = localStorage.getItem(newTransfer.id);
+
+    let transfereeTransactions = [];
+    if (transfereeTransactionsStr) {
+      transfereeTransactions = JSON.parse(transfereeTransactionsStr);
+    }
+
+    transfereeTransactions.unshift(newTransfer);
+
+    const updatedTransfereeTransactionsStr = JSON.stringify(
+      transfereeTransactions
+    );
+
+    localStorage.setItem(newTransfer.id, updatedTransfereeTransactionsStr);
   };
 
   function handleTransactionDelete(index) {
@@ -46,6 +61,7 @@ export default function ExpenseApp({ user }) {
     <>
       <div className="expense-tracker-container">
         <h2 className="expense-tracker-header">{`${user}'s Expense Tracker`}</h2>
+        <p className="account-number">Account number: {id}</p>
         <div className="container">
           <BalanceDisplay balance={income - expense} />
           <IncomeExpenseDisplay income={income} expense={expense} />
@@ -53,7 +69,12 @@ export default function ExpenseApp({ user }) {
             transactions={transactions}
             onTransactionDelete={handleTransactionDelete}
           />
-          <NewTransaction onNewTransaction={handleNewTransaction} user={user} />
+          <NewTransaction
+            onNewTransaction={handleNewTransaction}
+            onNewTransfer={handleNewTransfer}
+            user={user}
+            id={id}
+          />
         </div>
       </div>
     </>

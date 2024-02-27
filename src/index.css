@@ -8,6 +8,11 @@ body {
   font-size: 18px;
 }
 
+button {
+  border: none;
+  background: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -54,6 +59,7 @@ input[type='number'] {
   font-weight: bold;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0;
 }
 
 .container {
@@ -102,7 +108,7 @@ input[type='number'] {
 }
 
 .inspect {
-  border-right: 5px solid #9c88ff;
+  border-right: 50px solid #9c88ff;
   transition: ease 0.25s;
 }
 
@@ -172,7 +178,6 @@ input[type='number'] {
   cursor: pointer;
   background-color: #9c88ff;
   color: #fff;
-  border: 0;
   display: block;
   font-size: 16px;
   margin: 10px 0 30px;
@@ -192,11 +197,9 @@ input[type='number'] {
 .income-filter-btn {
   display: inline-block;
   padding: 3px 5px;
-  border: none;
   margin-top: 20px;
   margin-left: 40px;
   cursor: pointer;
-  background: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
@@ -208,10 +211,8 @@ input[type='number'] {
 .expense-filter-btn {
   display: inline-block;
   padding: 3px 5px;
-  border: none;
   margin-top: 20px;
   cursor: pointer;
-  background: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
@@ -270,4 +271,36 @@ input[type='number'] {
 
 .empty-list {
   margin: auto;
+}
+
+.account-number {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.payment-options-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.payment-options-container button {
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0;
+    padding: 10px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.payment-options-container button:hover {
+  background-color: #9c88ff;
+  color: #fff;
+}
+
+.payment-option-display {
+  display: flex;
+  padding-left: 10px;
+  padding-top: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }

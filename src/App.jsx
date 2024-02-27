@@ -4,9 +4,9 @@ export default function App() {
   return (
     <>
       <div className="bank-container">
-        <ExpenseApp user={"Sam"} />
-        {/* <ExpenseApp user={"Corben"} />
-        <ExpenseApp user={"Trafford"} /> */}
+        <ExpenseApp id={65783561} user={"Sam"} />
+        {/* <ExpenseApp id={36704960} user={"Corben"} /> */}
+        <ExpenseApp id={33690320} user={"Trafford"} />
       </div>
     </>
   );
