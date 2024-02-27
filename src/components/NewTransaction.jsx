@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function NewTransaction({
   onNewTransaction,
   onNewTransfer,
+  onNewRequest,
   user,
   id,
 }) {
@@ -10,7 +11,7 @@ export default function NewTransaction({
   const [displayAddTransaction, setDisplayAddTransaction] = useState(false);
   const [displayTransferTransaction, setDisplayTransferTransaction] =
     useState(false);
-  const [displayRequestTransaction, setDisplayRequestTransaction] =
+  const [displayWithdrawTransaction, setDisplayWithdrawTransaction] =
     useState(false);
   const textName = `${user}Text`;
   const amountName = `${user}Amount`;
@@ -20,23 +21,23 @@ export default function NewTransaction({
     switch (optionSelected) {
       case "Add":
         setDisplayAddTransaction(true);
+        setDisplayWithdrawTransaction(false);
         setDisplayTransferTransaction(false);
-        setDisplayRequestTransaction(false);
         break;
       case "Transfer":
         setDisplayAddTransaction(false);
+        setDisplayWithdrawTransaction(false);
         setDisplayTransferTransaction(true);
-        setDisplayRequestTransaction(false);
         break;
-      case "Request":
+      case "Withdraw":
         setDisplayAddTransaction(false);
+        setDisplayWithdrawTransaction(true);
         setDisplayTransferTransaction(false);
-        setDisplayRequestTransaction(true);
         break;
       default:
         setDisplayAddTransaction(true);
+        setDisplayWithdrawTransaction(false);
         setDisplayTransferTransaction(false);
-        setDisplayRequestTransaction(false);
     }
   }, [optionSelected]);
 
@@ -45,7 +46,8 @@ export default function NewTransaction({
 
     const textInput = document.getElementById(textName).value;
     const amountInput = validateAmount(
-      document.getElementById(amountName).value
+      document.getElementById(amountName).value,
+      true
     );
 
     if (validateFields(textInput, amountInput)) {
@@ -61,6 +63,32 @@ export default function NewTransaction({
       onNewTransaction(newTransaction);
 
       document.getElementById(textName).value = "";
+      document.getElementById(amountName).value = "";
+    } else {
+      console.error(`Invalid Input For Amount!`);
+    }
+  };
+
+  const handleNewWithdrawTransaction = (e) => {
+    e.preventDefault();
+
+    const amountInput = validateAmount(
+      document.getElementById(amountName).value,
+      true
+    );
+
+    if (validateFields(amountInput)) {
+      const newTransaction = {
+        text: "Withdrawn 💲",
+        amount: parseFloat(amountInput) * -1,
+        date: getDateAndTime(),
+        type: `Withdraw`,
+        inspect: false,
+        source: user,
+      };
+
+      onNewTransaction(newTransaction);
+
       document.getElementById(amountName).value = "";
     } else {
       console.error(`Invalid Input For Amount!`);
@@ -141,11 +169,11 @@ export default function NewTransaction({
     return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
   }
 
-  function validateAmount(input, transfer = false) {
+  function validateAmount(input, positive = false) {
     if (!isNaN(input)) {
       const amount = parseFloat(input);
       if (!isNaN(amount) && isFinite(amount)) {
-        if (transfer) {
+        if (positive) {
           if (amount > 0) {
             return amount;
           } else {
@@ -159,7 +187,7 @@ export default function NewTransaction({
     return null;
   }
 
-  function validateFields(textInput, amountInput) {
+  function validateFields(textInput = null, amountInput) {
     if (
       textInput !== "" &&
       amountInput !== null &&
@@ -180,16 +208,30 @@ export default function NewTransaction({
   function displayAdd() {
     return (
       <>
-        <form onSubmit={handleNewAddTransaction}>
+        <form className="form" onSubmit={handleNewAddTransaction}>
           <div>
-            <label>Text</label>
+            <label htmlFor={textName}>Text</label>
             <input type="text" id={textName} placeholder="Enter text..." />
           </div>
           <div>
-            <label>Amount: (negative - expense, positive - income)</label>
+            <label htmlFor={amountName}>Amount:</label>
             <input type="text" id={amountName} placeholder="Enter amount..." />
           </div>
-          <button className="btn">Add transaction</button>
+          <button className="btn">Add</button>
+        </form>
+      </>
+    );
+  }
+
+  function displayWithdraw() {
+    return (
+      <>
+        <form className="form" onSubmit={handleNewWithdrawTransaction}>
+          <div>
+            <label htmlFor={amountName}>Amount:</label>
+            <input type="text" id={amountName} placeholder="Enter amount..." />
+          </div>
+          <button className="btn">Withdraw</button>
         </form>
       </>
     );
@@ -198,9 +240,9 @@ export default function NewTransaction({
   function displayTransfer() {
     return (
       <>
-        <form onSubmit={handleNewTransferTransaction}>
+        <form className="form" onSubmit={handleNewTransferTransaction}>
           <div>
-            <label>Account Number</label>
+            <label htmlFor={accountName}>Account Number</label>
             <input
               type="number"
               id={accountName}
@@ -208,23 +250,15 @@ export default function NewTransaction({
             />
           </div>
           <div>
-            <label>Text</label>
+            <label htmlFor={textName}>Text</label>
             <input type="text" id={textName} placeholder="Enter text..." />
           </div>
           <div>
-            <label>Amount: (negative - expense, positive - income)</label>
+            <label htmlFor={amountName}>Amount:</label>
             <input type="text" id={amountName} placeholder="Enter amount..." />
           </div>
-          <button className="btn">Add transaction</button>
+          <button className="btn">Transfer</button>
         </form>
-      </>
-    );
-  }
-
-  function displayRequest() {
-    return (
-      <>
-        <div>Request</div>
       </>
     );
   }
@@ -235,18 +269,18 @@ export default function NewTransaction({
         <button id="Add" className="btnPressed" onClick={handleOptionSelected}>
           Add
         </button>
+        <button id="Withdraw" onClick={handleOptionSelected}>
+          Withdraw
+        </button>
         <button id="Transer" onClick={handleOptionSelected}>
           Transfer
-        </button>
-        <button id="Request" onClick={handleOptionSelected}>
-          Request
         </button>
       </div>
       {/* <h3 className="underline">Add new transaction</h3> */}
       <div className="payment-option-display">
         {displayAddTransaction && displayAdd()}
+        {displayWithdrawTransaction && displayWithdraw()}
         {displayTransferTransaction && displayTransfer()}
-        {displayRequestTransaction && displayRequest()}
       </div>
     </>
   );

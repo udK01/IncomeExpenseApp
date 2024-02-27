@@ -93,7 +93,5 @@ Transaction.defaultProps = {
   type: `Add`,
   source: `Santa`,
   inspect: false,
-  handleInspect: () => {
-    console.log(`Forgot Inspect Method`);
-  },
+  handleInspect: () => {},
 };

@@ -5,7 +5,7 @@ import History from "./History";
 
 import { useState, useEffect } from "react";
 
-export default function ExpenseApp({ id, user }) {
+export default function ExpenseApp({ id, user, update, setUpdate }) {
   const [transactions, setTransactions] = useState(() => {
     const savedTransactions = localStorage.getItem(id);
     return savedTransactions ? JSON.parse(savedTransactions) : [];
@@ -13,7 +13,15 @@ export default function ExpenseApp({ id, user }) {
 
   useEffect(() => {
     localStorage.setItem(id, JSON.stringify(transactions));
-  }, [transactions]);
+  }, [transactions, id]);
+
+  useEffect(() => {
+    setTransactions(() => {
+      const savedTransactions = localStorage.getItem(id);
+      return savedTransactions ? JSON.parse(savedTransactions) : [];
+    });
+    setUpdate("");
+  }, [update]);
 
   const { income, expense } = calculateIncomeAndExpense();
 
@@ -36,6 +44,8 @@ export default function ExpenseApp({ id, user }) {
     );
 
     localStorage.setItem(newTransfer.id, updatedTransfereeTransactionsStr);
+
+    setUpdate("true");
   };
 
   function handleTransactionDelete(index) {
