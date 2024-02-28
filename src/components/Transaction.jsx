@@ -31,6 +31,7 @@ export default function Transaction(props) {
   function handleInspect(index, x) {
     setInspect(x);
     props.handleInspect(index, x);
+    setShowTooltip(false);
   }
 
   if (inspect) {
