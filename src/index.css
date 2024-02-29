@@ -1,4 +1,4 @@
-body {
+.expense-tracker-container body {
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
@@ -8,36 +8,36 @@ body {
   font-size: 18px;
 }
 
-button {
+.expense-tracker-container button {
   border: none;
   background: none;
 }
 
-* {
+.expense-tracker-container * {
   box-sizing: border-box;
 }
 
-h1 {
+.expense-tracker-container h1 {
   letter-spacing: 1px;
   margin: 0;
 }
 
-h3 {
+.expense-tracker-container h3 {
   padding-bottom: 10px;
   margin: 40px 0 10px;
 }
 
-h4 {
+.expense-tracker-container h4 {
   margin: 0;
   text-transform: uppercase;
 }
 
-label {
+.expense-tracker-container label {
   display: inline-block;
   margin: 10px 0;
 }
 
-input[type='text'],
+.expense-tracker-container input[type='text'],
 input[type='number'] {
   border: 1px solid #dedede;
   border-radius: 2px;
