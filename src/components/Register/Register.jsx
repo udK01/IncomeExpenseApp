@@ -18,7 +18,7 @@ export default function Register(props) {
   const PASSWORD_LOWER = 6;
   const PASSWORD_UPPER = 20;
 
-  const handleSubmit = async (e, filename) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setUsernameError("");
     setPasswordError("");
@@ -27,7 +27,7 @@ export default function Register(props) {
     try {
       if (rangeCheck(username, USERNAME_LOWER, USERNAME_UPPER)) {
         if (passwordValidations(password, PASSWORD_LOWER, PASSWORD_UPPER)) {
-          await saveData(filename);
+          await saveData();
         }
       }
     } catch (error) {
@@ -77,15 +77,44 @@ export default function Register(props) {
     return containsUppercase && containsLowercase && containsDigit;
   }
 
-  async function saveData(filename) {}
-
-  // console.log(`User Saved!`);
-  // const response = await fetch(`../../${filename}`);
-  // if (!response.ok) {
-  //   throw new Error(`Failed to fetch data!`);
+  // async function saveData() {
+  //   try {
+  //     console.log(`Start.`);
+  //     const response = await fetch("/saveData", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ email }), // Send the email in the request body
+  //     });
+  //     console.log(`End.`);
+  //     if (!response.ok) {
+  //       console.error("Response status:", response.status);
+  //       console.log(response.url);
+  //       throw new Error("Failed to save data");
+  //     }
+  //     console.log("Data saved successfully!");
+  //   } catch (error) {
+  //     console.error("Error saving data:", error);
+  //   }
   // }
-  // const data = await response.text();
-  // console.log(data);
+
+  async function saveData() {
+    try {
+      console.log("Sending POST request...");
+      const response = await fetch("/saveData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      console.log("Response received:", response);
+      // Handle response here
+    } catch (error) {
+      console.error("Error sending POST request:", error);
+    }
+  }
 
   function autoFill() {
     setEmail(`test@test.com`);
@@ -98,7 +127,7 @@ export default function Register(props) {
     <>
       <form
         className={styles["register-form"]}
-        onSubmit={(e) => handleSubmit(e, `loginDetails.txt`)}
+        onSubmit={(e) => handleSubmit(e)}
       >
         <h1>Register</h1>
         <div className={styles.labelAndError}>
