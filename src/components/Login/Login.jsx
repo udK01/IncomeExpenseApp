@@ -6,6 +6,20 @@ export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  async function fetchData(filename) {
+    console.log(filename);
+    try {
+      const response = await fetch(`../../public/${filename}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data!`);
+      }
+      const data = await response.text();
+      console.log(data);
+    } catch (error) {
+      console.error(`Error fetching the data: ${error}`);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -18,8 +32,8 @@ export default function Login(props) {
     <>
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
         <h1>Login</h1>
+        <label htmlFor="username">Username</label>
         <div className={styles["input-container"]}>
-          <label htmlFor="username">Username</label>
           <input
             id="username"
             type="text"
@@ -29,8 +43,8 @@ export default function Login(props) {
             placeholder="your-username..."
           />
         </div>
+        <label htmlFor="password">Password</label>
         <div className={styles["input-container"]}>
-          <label htmlFor="password">Password</label>
           <input
             id="password"
             type="password"
@@ -40,7 +54,9 @@ export default function Login(props) {
             placeholder="********"
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={() => fetchData(`loginDetails.txt`)}>
+          Submit
+        </button>
       </form>
       <button
         className={styles["link-btn"]}
