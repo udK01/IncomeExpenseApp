@@ -1,6 +1,6 @@
 import ExpenseApp from "./components/ExpenseApp";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
+// import Register from "./components/Register/Register";
+// import Login from "./components/Login/Login";
 
 import { useState } from "react";
 
@@ -14,12 +14,12 @@ export default function App() {
 
   return (
     <>
-      {currentForm === "Login" ? (
+      {/* {currentForm === "Login" ? (
         <Login onFormSwitch={toggleForm} />
       ) : (
         <Register onFormSwitch={toggleForm} />
-      )}
-      {/* <div className="bank-container">
+      )} */}
+      <div className="bank-container">
         <ExpenseApp
           id={65783561}
           user={"Sam"}
@@ -32,12 +32,12 @@ export default function App() {
           update={update}
           setUpdate={setUpdate}
         />
-        <ExpenseApp
+        {/* <ExpenseApp
           id={33690320}
           user={"Trafford"}
           forceUpdateToggle={forceUpdateToggle}
-        />
-      </div> */}
+        /> */}
+      </div>
     </>
   );
 }

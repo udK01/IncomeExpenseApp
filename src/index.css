@@ -1,4 +1,4 @@
-.expense-tracker-container body {
+body {
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
@@ -8,37 +8,37 @@
   font-size: 18px;
 }
 
-.expense-tracker-container button {
+button {
   border: none;
   background: none;
 }
 
-.expense-tracker-container * {
+* {
   box-sizing: border-box;
 }
 
-.expense-tracker-container h1 {
+h1 {
   letter-spacing: 1px;
   margin: 0;
 }
 
-.expense-tracker-container h3 {
+h3 {
   padding-bottom: 10px;
   margin: 40px 0 10px;
 }
 
-.expense-tracker-container h4 {
+h4 {
   margin: 0;
   text-transform: uppercase;
 }
 
-.expense-tracker-container label {
+label {
   display: inline-block;
   margin: 10px 0;
 }
 
-.expense-tracker-container input[type='text'],
-input[type='number'] {
+input[type="text"],
+input[type="number"] {
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;
@@ -107,6 +107,10 @@ input[type='number'] {
   transition: ease 0.25s;
 }
 
+.moneyIn:hover {
+  border-right: 50px solid #2ecc71;
+}
+
 .inspect {
   border-right: 5px solid #9c88ff;
   transition: ease 0.25s;
@@ -114,10 +118,6 @@ input[type='number'] {
 
 .inspect:hover {
   border-right: 50px solid #9c88ff;
-}
-
-.moneyIn:hover {
-  border-right: 50px solid #2ecc71;
 }
 
 .moneyOut {
@@ -132,8 +132,8 @@ input[type='number'] {
 .transactions-list {
   list-style-type: none;
   padding: 0;
-  max-height:300px;
-  overflow-y:scroll;
+  max-height: 300px;
+  overflow-y: scroll;
   scrollbar-width: none;
   position: relative;
 }
@@ -244,7 +244,7 @@ input[type='number'] {
 }
 
 .transaction-details {
-  position: 'relative';
+  position: "relative";
   transform: translate(150%);
   padding: 0;
   margin: 0;
@@ -254,7 +254,7 @@ input[type='number'] {
   display: flex;
   justify-content: center;
   transform: translate(0%, -9%);
-  background-color:#9c88ff;
+  background-color: #9c88ff;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   transition: ease 0.25s;
@@ -284,12 +284,12 @@ input[type='number'] {
 }
 
 .payment-options-container button {
-    cursor: pointer;
-    font-size: 16px;
-    margin: 0;
-    padding: 10px;
-    width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .payment-options-container button:hover {
