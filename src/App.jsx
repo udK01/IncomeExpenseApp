@@ -1,43 +1,61 @@
 import ExpenseApp from "./components/ExpenseApp";
-// import Register from "./components/Register/Register";
-// import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const [update, setUpdate] = useState("");
+  const [user, setUser] = useState([]);
+  const [rememberUser, setRememberUser] = useState(false);
   const [currentForm, setCurrentForm] = useState("Login");
+  const [update, setUpdate] = useState("");
+
+  useEffect(() => {
+    if (user.length > 0) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [rememberUser]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   };
 
+  function handleLogin(userData, stayLoggedIn) {
+    setUser(userData);
+    setRememberUser(stayLoggedIn);
+  }
+
+  function handleLogout() {
+    setUser([]);
+    localStorage.removeItem("user");
+  }
+
   return (
     <>
-      {/* {currentForm === "Login" ? (
-        <Login onFormSwitch={toggleForm} />
+      {localStorage.clear()}
+      {user.length == 0 ? (
+        currentForm === "Login" ? (
+          <Login onFormSwitch={toggleForm} onLogin={handleLogin} />
+        ) : (
+          <Register onFormSwitch={toggleForm} />
+        )
       ) : (
-        <Register onFormSwitch={toggleForm} />
-      )} */}
-      <div className="bank-container">
-        <ExpenseApp
-          id={65783561}
-          user={"Sam"}
-          update={update}
-          setUpdate={setUpdate}
-        />
-        <ExpenseApp
-          id={36704960}
-          user={"Corben"}
-          update={update}
-          setUpdate={setUpdate}
-        />
-        {/* <ExpenseApp
-          id={33690320}
-          user={"Trafford"}
-          forceUpdateToggle={forceUpdateToggle}
-        /> */}
-      </div>
+        <div className="bank-container">
+          <ExpenseApp
+            id={65783561}
+            user={"Sam"}
+            update={update}
+            setUpdate={setUpdate}
+          />
+        </div>
+      )}
     </>
   );
 }
