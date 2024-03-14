@@ -2,18 +2,31 @@ import IncomeExpenseDisplay from "./IncomeExpenseDisplay";
 import BalanceDisplay from "./BalanceDisplay";
 import NewTransaction from "./NewTransaction";
 import History from "./History";
+import axios from "axios";
 
 import { useState, useEffect } from "react";
 
 export default function ExpenseApp({ id, user, update, setUpdate }) {
-  const [transactions, setTransactions] = useState(() => {
-    const savedTransactions = localStorage.getItem(id);
-    return savedTransactions ? JSON.parse(savedTransactions) : [];
-  });
+  const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState(() => {
+  //   const savedTransactions = localStorage.getItem(id);
+  //   return savedTransactions ? JSON.parse(savedTransactions) : [];
+  // });
 
   useEffect(() => {
-    localStorage.setItem(id, JSON.stringify(transactions));
-  }, [transactions, id]);
+    axios
+      .get(`/api/transactions?account_number=${id}`)
+      .then((response) => {
+        setTransactions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching transactions:", error);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem(id, JSON.stringify(transactions));
+  // }, [transactions, id]);
 
   useEffect(() => {
     setTransactions(() => {

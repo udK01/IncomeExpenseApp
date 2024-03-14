@@ -47,17 +47,18 @@ export default function History(props) {
 
   function displayTransactions() {
     if (transactions.length !== 0) {
+      console.log(transactions);
       return transactions.map((transaction, index) => (
         <Transaction
           key={index}
           index={index}
-          text={transaction.text}
-          liClassName={incomeOrExpense(transaction.amount)}
-          amount={transaction.amount}
+          text={transaction.transaction_text}
+          liClassName={incomeOrExpense(transaction.transaction_amount)}
+          amount={parseFloat(transaction.transaction_amount)}
           deleteTransaction={props.onTransactionDelete}
-          date={transaction.date}
-          type={transaction.type}
-          source={transaction.source}
+          date={transaction.transaction_date}
+          type={transaction.transaction_type}
+          source={transaction.transaction_source}
           inspect={props.inspect}
           handleInspect={handleInspect}
           filterChanged={filterChanged}
