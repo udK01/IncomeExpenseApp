@@ -5,7 +5,7 @@ import Login from "./components/Login/Login";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState("");
   const [rememberUser, setRememberUser] = useState(false);
   const [currentForm, setCurrentForm] = useState("Login");
   const [update, setUpdate] = useState("");
@@ -39,7 +39,6 @@ export default function App() {
 
   return (
     <>
-      {localStorage.clear()}
       {user.length == 0 ? (
         currentForm === "Login" ? (
           <Login onFormSwitch={toggleForm} onLogin={handleLogin} />
@@ -49,8 +48,9 @@ export default function App() {
       ) : (
         <div className="bank-container">
           <ExpenseApp
-            id={65783561}
-            user={"Sam"}
+            id={user[0].account_number}
+            user={user[0].username}
+            onLogout={handleLogout}
             update={update}
             setUpdate={setUpdate}
           />

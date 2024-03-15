@@ -8,10 +8,6 @@ import { useState, useEffect } from "react";
 
 export default function ExpenseApp({ id, user, update, setUpdate }) {
   const [transactions, setTransactions] = useState([]);
-  // const [transactions, setTransactions] = useState(() => {
-  //   const savedTransactions = localStorage.getItem(id);
-  //   return savedTransactions ? JSON.parse(savedTransactions) : [];
-  // });
 
   useEffect(() => {
     axios
@@ -23,18 +19,6 @@ export default function ExpenseApp({ id, user, update, setUpdate }) {
         console.error("Error fetching transactions:", error);
       });
   }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem(id, JSON.stringify(transactions));
-  // }, [transactions, id]);
-
-  useEffect(() => {
-    setTransactions(() => {
-      const savedTransactions = localStorage.getItem(id);
-      return savedTransactions ? JSON.parse(savedTransactions) : [];
-    });
-    setUpdate("");
-  }, [update]);
 
   const { income, expense } = calculateIncomeAndExpense();
 
