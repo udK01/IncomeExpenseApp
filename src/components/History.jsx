@@ -72,6 +72,7 @@ export default function History(props) {
         <Transaction
           key={index}
           index={index}
+          transaction_id={transaction.transaction_id}
           text={transaction.transaction_text}
           liClassName={incomeOrExpense(transaction.transaction_amount)}
           amount={parseFloat(transaction.transaction_amount)}

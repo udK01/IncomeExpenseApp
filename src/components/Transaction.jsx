@@ -53,7 +53,7 @@ export default function Transaction(props) {
       >
         <button
           className="delete-btn"
-          onClick={() => props.deleteTransaction(props.index)}
+          onClick={() => props.deleteTransaction(props.transaction_id)}
         >
           x
         </button>
@@ -72,6 +72,7 @@ export default function Transaction(props) {
 }
 Transaction.propTypes = {
   index: PropTypes.number,
+  transaction_id: PropTypes.number,
   liClassName: PropTypes.string,
   text: PropTypes.string,
   amount: PropTypes.number,
@@ -84,6 +85,7 @@ Transaction.propTypes = {
 };
 Transaction.defaultProps = {
   index: `0`,
+  transaction_id: `0`,
   liClassName: `moneyIn`,
   text: `Cash`,
   amount: `0.00`,
