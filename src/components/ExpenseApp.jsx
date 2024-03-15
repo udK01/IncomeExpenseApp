@@ -48,25 +48,6 @@ export default function ExpenseApp(props) {
       });
   };
 
-  const handleNewTransfer = (newTransfer) => {
-    const transfereeTransactionsStr = localStorage.getItem(newTransfer.id);
-
-    let transfereeTransactions = [];
-    if (transfereeTransactionsStr) {
-      transfereeTransactions = JSON.parse(transfereeTransactionsStr);
-    }
-
-    transfereeTransactions.unshift(newTransfer);
-
-    const updatedTransfereeTransactionsStr = JSON.stringify(
-      transfereeTransactions
-    );
-
-    localStorage.setItem(newTransfer.id, updatedTransfereeTransactionsStr);
-
-    setUpdate("true");
-  };
-
   function handleTransactionDelete(transaction_id) {
     axios
       .delete(`/api/transaction/${transaction_id}`, {
@@ -111,7 +92,6 @@ export default function ExpenseApp(props) {
           />
           <NewTransaction
             onNewTransaction={handleNewTransaction}
-            onNewTransfer={handleNewTransfer}
             account_number={props.account_number}
             username={props.username}
           />

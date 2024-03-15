@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default function NewTransaction({
   onNewTransaction,
-  onNewTransfer,
   account_number,
   username,
 }) {
@@ -95,7 +94,7 @@ export default function NewTransaction({
     }
   };
 
-  const handleNewTransferTransaction = (e) => {
+  const handleNewTransferTransaction = async (e) => {
     e.preventDefault();
 
     const textInput = document.getElementById(textName).value;
@@ -105,35 +104,41 @@ export default function NewTransaction({
     );
     const accountNumber = document.getElementById(accountName).value;
 
-    // Validate account number.
-    if (getUserByAccountNumber(accountNumber)) {
-      if (validateFields(textInput, amountInput)) {
-        const newTransfer = {
-          account_number: accountNumber,
-          transaction_text: textInput,
-          transaction_amount: parseFloat(amountInput),
-          transaction_date: getDateAndTime(),
-          transaction_type: `Transfer`,
-          transaction_source: user,
-        };
+    try {
+      const userExists = await getUserByAccountNumber(accountNumber);
 
-        onNewTransfer(newTransfer);
+      if (userExists) {
+        if (validateFields(textInput, amountInput)) {
+          const newTransfer = {
+            account_number: accountNumber,
+            type: `Transfer`,
+            text: textInput,
+            amount: parseFloat(amountInput),
+            date: getDateAndTime(),
+            source: username,
+          };
 
-        const newTransaction = {
-          ...newTransfer,
-          amount: -amountInput,
-        };
+          onNewTransaction(newTransfer);
 
-        onNewTransaction(newTransaction);
+          const newTransaction = {
+            ...newTransfer,
+            account_number: account_number,
+            amount: -amountInput,
+          };
 
-        document.getElementById(textName).value = "";
-        document.getElementById(amountName).value = "";
-        document.getElementById(accountName).value = "";
+          onNewTransaction(newTransaction);
+
+          document.getElementById(textName).value = "";
+          document.getElementById(amountName).value = "";
+          document.getElementById(accountName).value = "";
+        } else {
+          console.error(`Invalid Input For Amount!`);
+        }
       } else {
-        console.error(`Invalid Input For Amount!`);
+        console.error(`No user found with the provided account number!`);
       }
-    } else {
-      console.error(`No user found with the provided account number!`);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -199,9 +204,18 @@ export default function NewTransaction({
     }
   }
 
-  function getUserByAccountNumber(accountNumber) {
-    const transfereeDetails = localStorage.getItem(accountNumber);
-    return transfereeDetails !== null ? true : false;
+  async function getUserByAccountNumber(accountNumber) {
+    try {
+      const response = await axios.get("/api/getUser", {
+        params: {
+          account_number: accountNumber,
+        },
+      });
+      return response.data.exists;
+    } catch (error) {
+      console.error("Failed while getting account:", error);
+      throw error;
+    }
   }
 
   function displayAdd() {

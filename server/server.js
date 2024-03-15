@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import {
+  createAccount,
   getAccount,
   getAccountByAccountNumber,
   getAccountNames,
@@ -108,6 +109,22 @@ app.delete("/api/transaction/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting transaction:", error);
     res.status(500).json({ error: "Error deleting transaction" });
+  }
+});
+
+app.get("/api/getUser", async (req, res) => {
+  try {
+    const { account_number } = req.query;
+    const account = await getAccountByAccountNumber(account_number);
+
+    if (account.length > 0) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    res.status(500).json({ error: "Failed to fetch user" });
   }
 });
 
