@@ -4,7 +4,7 @@ export default function DetailedTransaction(props) {
       <li className="inspect">
         <button
           className="delete-btn"
-          onClick={() => props.deleteTransaction(props.index)}
+          onClick={() => props.deleteTransaction(props.transaction_id)}
         >
           x
         </button>
