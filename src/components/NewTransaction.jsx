@@ -79,12 +79,12 @@ export default function NewTransaction({
 
     if (validateFields(amountInput)) {
       const newTransaction = {
+        account_number: account_number,
+        type: `Withdraw`,
         text: "Withdrawn 💲",
         amount: parseFloat(amountInput) * -1,
         date: getDateAndTime(),
-        type: `Withdraw`,
-        inspect: false,
-        source: user,
+        source: username,
       };
 
       onNewTransaction(newTransaction);
