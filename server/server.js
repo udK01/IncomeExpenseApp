@@ -74,7 +74,6 @@ app.get("/api/transactions", async (req, res) => {
 });
 
 app.post("/api/transaction", async (req, res) => {
-  console.log(`Output: ${req.body.account_number}`);
   const {
     account_number,
     transaction_type,
@@ -83,13 +82,6 @@ app.post("/api/transaction", async (req, res) => {
     transaction_date,
     transaction_source,
   } = req.body;
-
-  console.log(account_number);
-  console.log(transaction_type);
-  console.log(transaction_text);
-  console.log(transaction_amount);
-  console.log(transaction_date);
-  console.log(transaction_source);
 
   try {
     await addTransaction(

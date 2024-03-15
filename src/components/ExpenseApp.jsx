@@ -87,10 +87,10 @@ export default function ExpenseApp(props) {
     let expense = 0;
 
     transactions.forEach((transaction) => {
-      if (transaction.amount >= 0) {
-        income += transaction.amount;
+      if (transaction.transaction_amount >= 0) {
+        income += parseFloat(transaction.transaction_amount);
       } else {
-        expense += Math.abs(transaction.amount);
+        expense += Math.abs(parseFloat(transaction.transaction_amount));
       }
     });
 
