@@ -15,16 +15,33 @@ export default function History(props) {
     switch (selectedOption) {
       case "Ascending":
         setTransactions((prevTransactions) =>
-          [...prevTransactions].sort((a, b) => a.amount - b.amount)
+          [...prevTransactions].sort(
+            (a, b) =>
+              parseFloat(a.transaction_amount) -
+              parseFloat(b.transaction_amount)
+          )
         );
         break;
       case "Descending":
         setTransactions((prevTransactions) =>
-          [...prevTransactions].sort((a, b) => b.amount - a.amount)
+          [...prevTransactions].sort(
+            (a, b) =>
+              parseFloat(b.transaction_amount) -
+              parseFloat(a.transaction_amount)
+          )
         );
         break;
       default:
         setTransactions(props.transactions);
+        switch (historyFilter) {
+          case "Expense":
+            document
+              .getElementById("expenseBtn")
+              .classList.remove("btnPressed");
+          case "Income":
+            document.getElementById("incomeBtn").classList.remove("btnPressed");
+        }
+        setHistoryFilter("");
     }
   }, [selectedOption, props.transactions]);
 
@@ -32,12 +49,16 @@ export default function History(props) {
     switch (historyFilter) {
       case "Income":
         setTransactions(
-          props.transactions.filter((transaction) => transaction.amount >= 0)
+          props.transactions.filter(
+            (transaction) => transaction.transaction_amount >= 0
+          )
         );
         break;
       case "Expense":
         setTransactions(
-          props.transactions.filter((transaction) => transaction.amount <= 0)
+          props.transactions.filter(
+            (transaction) => transaction.transaction_amount <= 0
+          )
         );
         break;
       default:
