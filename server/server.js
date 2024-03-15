@@ -14,6 +14,8 @@ import {
 const PORT = 8080;
 const app = express();
 
+app.use(express.json());
+
 // Other server-side code.
 app.get("/api/account", async (req, res) => {
   const { username, password } = req.query;
@@ -68,6 +70,52 @@ app.get("/api/transactions", async (req, res) => {
   } catch (error) {
     console.error("Error fetching transactions:", error);
     res.status(500).json({ error: "Error fetching transactions" });
+  }
+});
+
+app.post("/api/transaction", async (req, res) => {
+  console.log(`Output: ${req.body.account_number}`);
+  const {
+    account_number,
+    transaction_type,
+    transaction_text,
+    transaction_amount,
+    transaction_date,
+    transaction_source,
+  } = req.body;
+
+  console.log(account_number);
+  console.log(transaction_type);
+  console.log(transaction_text);
+  console.log(transaction_amount);
+  console.log(transaction_date);
+  console.log(transaction_source);
+
+  try {
+    await addTransaction(
+      account_number,
+      transaction_type,
+      transaction_text,
+      transaction_amount,
+      transaction_date,
+      transaction_source
+    );
+    res.status(200).json(`Transaction Added Successfully!`);
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+    res.status(500).json({ error: "Error creating account" });
+  }
+});
+
+app.delete("/api/transaction/:id", async (req, res) => {
+  const transaction_id = req.params.id;
+
+  try {
+    await deleteTransaction(transaction_id);
+    res.status(200).json({ message: "Transaction deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting transaction:", error);
+    res.status(500).json({ error: "Error deleting transaction" });
   }
 });
 

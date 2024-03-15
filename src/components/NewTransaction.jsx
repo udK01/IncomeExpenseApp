@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function NewTransaction({
   onNewTransaction,
   onNewTransfer,
-  onNewRequest,
-  user,
-  id,
+  account_number,
+  username,
 }) {
   const [optionSelected, setOptionSelected] = useState("Add");
   const [displayAddTransaction, setDisplayAddTransaction] = useState(false);
@@ -13,9 +13,9 @@ export default function NewTransaction({
     useState(false);
   const [displayWithdrawTransaction, setDisplayWithdrawTransaction] =
     useState(false);
-  const textName = `${user}Text`;
-  const amountName = `${user}Amount`;
-  const accountName = `${user}-${id}`;
+  const textName = `${username}Text`;
+  const amountName = `${username}Amount`;
+  const accountName = `${username}-${account_number}`;
 
   useEffect(() => {
     switch (optionSelected) {
@@ -52,12 +52,12 @@ export default function NewTransaction({
 
     if (validateFields(textInput, amountInput)) {
       const newTransaction = {
+        account_number: account_number,
+        type: `Add`,
         text: textInput,
         amount: parseFloat(amountInput),
         date: getDateAndTime(),
-        type: `Add`,
-        inspect: false,
-        source: user,
+        source: username,
       };
 
       onNewTransaction(newTransaction);
@@ -109,13 +109,12 @@ export default function NewTransaction({
     if (getUserByAccountNumber(accountNumber)) {
       if (validateFields(textInput, amountInput)) {
         const newTransfer = {
-          id: accountNumber,
-          text: textInput,
-          amount: parseFloat(amountInput),
-          date: getDateAndTime(),
-          type: `Transfer`,
-          inspect: false,
-          source: user,
+          account_number: accountNumber,
+          transaction_text: textInput,
+          transaction_amount: parseFloat(amountInput),
+          transaction_date: getDateAndTime(),
+          transaction_type: `Transfer`,
+          transaction_source: user,
         };
 
         onNewTransfer(newTransfer);
@@ -166,7 +165,7 @@ export default function NewTransaction({
     const hours = padZero(date.getHours());
     const minutes = padZero(date.getMinutes());
     const seconds = padZero(date.getSeconds());
-    return `${day}/${month}/${year} - ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
   function validateAmount(input, positive = false) {

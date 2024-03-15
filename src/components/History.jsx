@@ -47,7 +47,6 @@ export default function History(props) {
 
   function displayTransactions() {
     if (transactions.length !== 0) {
-      console.log(transactions);
       return transactions.map((transaction, index) => (
         <Transaction
           key={index}

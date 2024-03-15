@@ -8,7 +8,7 @@ export default function App() {
   const [user, setUser] = useState("");
   const [rememberUser, setRememberUser] = useState(false);
   const [currentForm, setCurrentForm] = useState("Login");
-  const [update, setUpdate] = useState("");
+  const [refresh, setRefresh] = useState("");
 
   useEffect(() => {
     if (user.length > 0) {
@@ -25,6 +25,10 @@ export default function App() {
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
+  };
+
+  const toggleRefresh = () => {
+    setRefresh(!refresh);
   };
 
   function handleLogin(userData, stayLoggedIn) {
@@ -48,11 +52,11 @@ export default function App() {
       ) : (
         <div className="bank-container">
           <ExpenseApp
-            id={user[0].account_number}
-            user={user[0].username}
+            account_number={user[0].account_number}
+            username={user[0].username}
             onLogout={handleLogout}
-            update={update}
-            setUpdate={setUpdate}
+            refresh={refresh}
+            onRefresh={toggleRefresh}
           />
         </div>
       )}

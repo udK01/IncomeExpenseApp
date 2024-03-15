@@ -6,24 +6,46 @@ import axios from "axios";
 
 import { useState, useEffect } from "react";
 
-export default function ExpenseApp({ id, user, update, setUpdate }) {
+export default function ExpenseApp(props) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/api/transactions?account_number=${id}`)
+      .get(`/api/transactions?account_number=${props.account_number}`)
       .then((response) => {
         setTransactions(response.data);
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
       });
-  }, []);
+  }, [props.refresh]);
 
   const { income, expense } = calculateIncomeAndExpense();
 
   const handleNewTransaction = (newTransaction) => {
-    setTransactions([...transactions, newTransaction]);
+    axios
+      .post(
+        "/api/transaction",
+        {
+          account_number: newTransaction.account_number,
+          transaction_type: newTransaction.type,
+          transaction_text: newTransaction.text,
+          transaction_amount: newTransaction.amount,
+          transaction_date: newTransaction.date,
+          transaction_source: newTransaction.source,
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        props.onRefresh();
+      })
+      .catch((error) => {
+        console.error("Failed to add transaction:", error);
+      });
   };
 
   const handleNewTransfer = (newTransfer) => {
@@ -45,8 +67,19 @@ export default function ExpenseApp({ id, user, update, setUpdate }) {
     setUpdate("true");
   };
 
-  function handleTransactionDelete(index) {
-    setTransactions(transactions.filter((_, i) => i !== index));
+  function handleTransactionDelete(transaction_id) {
+    axios
+      .delete(`/api/transaction/${transaction_id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        props.onRefresh();
+      })
+      .catch((error) => {
+        console.error("Failed to delete transaction:", error);
+      });
   }
 
   function calculateIncomeAndExpense() {
@@ -67,8 +100,8 @@ export default function ExpenseApp({ id, user, update, setUpdate }) {
   return (
     <>
       <div className="expense-tracker-container">
-        <h2 className="expense-tracker-header">{`${user}'s Expense Tracker`}</h2>
-        <p className="account-number">Account number: {id}</p>
+        <h2 className="expense-tracker-header">{`${props.username}'s Expense Tracker`}</h2>
+        <p className="account-number">Account number: {props.account_number}</p>
         <div className="container">
           <BalanceDisplay balance={income - expense} />
           <IncomeExpenseDisplay income={income} expense={expense} />
@@ -79,8 +112,8 @@ export default function ExpenseApp({ id, user, update, setUpdate }) {
           <NewTransaction
             onNewTransaction={handleNewTransaction}
             onNewTransfer={handleNewTransfer}
-            user={user}
-            id={id}
+            account_number={props.account_number}
+            username={props.username}
           />
         </div>
       </div>
