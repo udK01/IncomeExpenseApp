@@ -81,8 +81,17 @@ export default function ExpenseApp(props) {
   return (
     <>
       <div className="expense-tracker-container">
-        <h2 className="expense-tracker-header">{`${props.username}'s Expense Tracker`}</h2>
-        <p className="account-number">Account number: {props.account_number}</p>
+        <div className="navigation-bar">
+          <div class="header-content">
+            <h2 className="expense-tracker-header">{`${props.username}'s Expense Tracker`}</h2>
+            <p className="account-number">
+              Account number: {props.account_number}
+            </p>
+          </div>
+          <button className="logout-btn" onClick={props.onLogout}>
+            Logout
+          </button>
+        </div>
         <div className="container">
           <BalanceDisplay balance={income - expense} />
           <IncomeExpenseDisplay income={income} expense={expense} />
