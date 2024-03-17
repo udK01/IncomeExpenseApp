@@ -82,7 +82,7 @@ export default function ExpenseApp(props) {
     <>
       <div className="expense-tracker-container">
         <div className="navigation-bar">
-          <div class="header-content">
+          <div className="header-content">
             <h2 className="expense-tracker-header">{`${props.username}'s Expense Tracker`}</h2>
             <p className="account-number">
               Account number: {props.account_number}
